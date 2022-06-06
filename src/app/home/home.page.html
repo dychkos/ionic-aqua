@@ -1,20 +1,51 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
     <ion-title>
-      Blank
+      Aquariums
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>
+        Aquarium
+      </ion-label>
+      <ion-button shape="round" fill="outline" color="success" (click)="add()">
+        <ion-icon slot="start" name="add"></ion-icon> Додати
+      </ion-button>
+    </ion-list-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+    <app-aquarium
+      *ngIf="showNew" [isNew]="true"
+      (addAquarium)="addAquarium($event)"
+      (cancelAddingAquarium)="showNew=false">
+    </app-aquarium>
+
+    <div *ngFor="let aqua of aquariums; let i = index;">
+      <ion-item-sliding>
+        <ion-item-options side="start">
+          <ion-item-option color="primary" (click)="showEdit=i">
+            <ion-icon name="create"></ion-icon> Змінити
+          </ion-item-option>
+          <ion-item-option color="danger" (click)="delete(i)">
+            <ion-icon name="trash"></ion-icon> Видалити
+          </ion-item-option>
+        </ion-item-options>
+        <ion-item (click)="showEdit=-1">
+          <ion-icon name="fish" slot="start"></ion-icon>
+          <ion-label> {{aqua.id}} </ion-label>
+          <ion-note slot="end"> {{aqua.type}} </ion-note>
+        </ion-item>
+      </ion-item-sliding>
+
+      <app-aquarium
+        *ngIf="showEdit===i" [isNew]="false"
+        [aqua]="aqua"
+      >
+      </app-aquarium>
+
+    </div>
+  </ion-list>
 </ion-content>
