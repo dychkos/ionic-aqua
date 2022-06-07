@@ -25,6 +25,10 @@ export class DataGetterService {
     }
   ];
 
+  private userName = '';
+
+  private users = ['Admin', 'Aqua'];
+
   constructor() { }
 
   getAquariums(): Observable<Aquarium[]> {
@@ -37,6 +41,18 @@ export class DataGetterService {
 
   deleteAquarium(index: number) {
     this.aquariums.splice(index, 1);
+  }
+
+  getUser() {
+    return this.userName;
+  }
+
+  setUser(username: string) {
+    this.userName = username;
+  }
+
+  userExists(name: string): boolean {
+    return this.users.indexOf(name) !== -1;
   }
 
 }

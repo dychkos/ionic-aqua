@@ -10,7 +10,7 @@ export class HomePage {
 
   showNew = false;
   showEdit = -1;
-
+  userName: string;
   aquariums: Aquarium[];
 
   constructor(private dataGetter: DataGetterService) {
@@ -19,6 +19,7 @@ export class HomePage {
         this.aquariums = data;
       }
     );
+    this.userName = this.dataGetter.getUser();
   }
 
   add() {
