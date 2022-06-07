@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Aquariums
+      {{title}}
     </ion-title>
     <ion-buttons slot="secondary">
       {{userName}}
@@ -44,6 +44,10 @@
           <ion-label> {{aqua.id}} </ion-label>
           <ion-note slot="end"> {{aqua.type}} </ion-note>
         </ion-item>
+        <ion-item-options side="end" >
+          <ion-icon name="reorder-four-outline"></ion-icon>
+          Fish
+        </ion-item-options>
       </ion-item-sliding>
 
       <app-aquarium

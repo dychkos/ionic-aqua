@@ -29,6 +29,12 @@ export class DataGetterService {
 
   private users = ['Admin', 'Aqua'];
 
+  private fish = [
+    {id: 1, name: 'Colorado', weight: 100, aquaId: 1},
+    {id: 1, name: 'Xwego', weight: 100, aquaId: 1},
+    {id: 1, name: 'Pulbo', weight: 100, aquaId: 1},
+  ];
+
   constructor() { }
 
   getAquariums(): Observable<Aquarium[]> {
@@ -53,6 +59,10 @@ export class DataGetterService {
 
   userExists(name: string): boolean {
     return this.users.indexOf(name) !== -1;
+  }
+
+  getFish(aquaId: number): Observable<any[]>{
+    return of(this.fish.filter(fi => fi.aquaId === aquaId));
   }
 
 }

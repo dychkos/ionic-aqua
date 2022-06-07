@@ -17,6 +17,11 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
+  {
+    path: 'fish/:aqua_id',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./fish/fish.module').then( m => m.FishPageModule)
+  },
 ];
 
 @NgModule({

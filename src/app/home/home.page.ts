@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { DataGetterService, Aquarium } from '../services/data-getter.service';
+import  { SharedDataService } from '../services/shared-data.service';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,12 @@ export class HomePage {
   userName: string;
   aquariums: Aquarium[];
 
-  constructor(private dataGetter: DataGetterService) {
+  title = 'Aquariums';
+
+  constructor(
+    private dataGetter: DataGetterService,
+    private sharedData: SharedDataService
+  ) {
     this.dataGetter.getAquariums().subscribe(
       data => {
         this.aquariums = data;
@@ -33,6 +39,12 @@ export class HomePage {
   addAquarium(aquarium: Aquarium) {
     this.dataGetter.addAquarium(aquarium);
     this.showNew = false;
+  }
+
+  ionViewDidEnter() {
+    if(this.sharedData.getTextData() !== '') {
+      this.title = this.sharedData.getTextData();
+    }
   }
 
 }
