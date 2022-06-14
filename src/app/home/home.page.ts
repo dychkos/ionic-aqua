@@ -32,12 +32,28 @@ export class HomePage {
     this.showNew = true;
   }
 
-  delete(index: number) {
-    this.dataGetter.deleteAquarium(index);
+  delete(aqua: Aquarium) {
+    this.dataGetter.deleteAquarium(aqua).subscribe(
+      res => {
+        this.dataGetter.getAquariums().subscribe(
+          data => {
+            this.aquariums = data;
+          }
+        );
+      }
+    );
   }
 
   addAquarium(aquarium: Aquarium) {
-    this.dataGetter.addAquarium(aquarium);
+    this.dataGetter.addAquarium(aquarium).subscribe(
+      res => {
+        this.dataGetter.getAquariums().subscribe(
+          data => {
+            this.aquariums = data;
+          }
+        );
+      }
+    );
     this.showNew = false;
   }
 

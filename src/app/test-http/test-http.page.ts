@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {map} from "rxjs/operators";
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-test-http',
@@ -20,6 +20,15 @@ export class TestHttpPage implements OnInit {
 
   ngOnInit() {
     this.refreshData(false);
+    this.http.get('http://ionic-api/?a=3&b=4').subscribe(
+      data => console.log(data)
+    );
+    this.http.post('http://ionic-api/', {
+      name: 'Sergey Dychko',
+      group: '301'
+    }).subscribe(
+      data => console.log(data)
+    );
   }
 
   // onButtonClick() {

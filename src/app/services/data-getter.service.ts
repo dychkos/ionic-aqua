@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable, of} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 
 export interface Aquarium {
   id: number;
@@ -11,42 +12,46 @@ export interface Aquarium {
   providedIn: 'root'
 })
 export class DataGetterService {
+  baseUrl = 'http://ionic-api/';
 
-  private aquariums: Aquarium[] = [
-    {
-      id: 1,
-      type: 'square',
-      capacity: 200
-    },
-    {
-      id: 2,
-      type: 'circle',
-      capacity: 50
-    }
-  ];
+  private aquariums: Aquarium[];
+  private users = [];
+  private fish = [];
 
   private userName = '';
+  private token = '';
 
-  private users = ['Admin', 'Aqua'];
+  constructor(
+    private http: HttpClient
+  ) { }
 
-  private fish = [
-    {id: 1, name: 'Colorado', weight: 100, aquaId: 1},
-    {id: 1, name: 'Xwego', weight: 100, aquaId: 1},
-    {id: 1, name: 'Pulbo', weight: 100, aquaId: 1},
-  ];
-
-  constructor() { }
+  checkUser(user) {
+    return this.http.post<any>(this.baseUrl + '?action=login', user);
+  }
 
   getAquariums(): Observable<Aquarium[]> {
-    return of(this.aquariums);
+    return this.http.get<any>(this.baseUrl + '?action=get-aquariums&token=' + this.token);
+  }
+
+  editAquarium(aquarium) {
+    return this.http.post<any>(
+      this.baseUrl + '?action=edit-aquarium&token=' + this.token,
+      aquarium
+    );
   }
 
   addAquarium(aqua: Aquarium) {
-    this.aquariums.push(aqua);
+    return this.http.post<any>(
+      this.baseUrl + '?action=add-aquarium&token=' + this.token,
+      aqua
+    );
   }
 
-  deleteAquarium(index: number) {
-    this.aquariums.splice(index, 1);
+  deleteAquarium(aqua: Aquarium) {
+    return this.http.post<any>(
+      this.baseUrl + '?action=del-aquarium&token=' + this.token,
+      aqua
+    );
   }
 
   getUser() {
@@ -57,12 +62,18 @@ export class DataGetterService {
     this.userName = username;
   }
 
+  setToken(token: string) {
+    this.token = token;
+  }
+
   userExists(name: string): boolean {
     return this.users.indexOf(name) !== -1;
   }
 
   getFish(aquaId: number): Observable<any[]>{
-    return of(this.fish.filter(fi => fi.aquaId === aquaId));
+    return this.http.get<any>(
+      this.baseUrl + '?action=get-fish&group='+ aquaId + '&token=' + this.token
+    );
   }
 
 }

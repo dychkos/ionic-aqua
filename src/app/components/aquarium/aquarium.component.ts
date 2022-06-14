@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
-import { Aquarium } from 'src/app/services/data-getter.service';
+import {Aquarium, DataGetterService} from 'src/app/services/data-getter.service';
 
 @Component({
   selector: 'app-aquarium',
@@ -16,7 +16,9 @@ export class AquariumComponent implements OnInit {
 
   title: string;
 
-  constructor() { }
+  constructor(
+    private dataGetter: DataGetterService
+  ) { }
 
   ngOnInit() {
     if(this.isNew) {
@@ -39,6 +41,12 @@ export class AquariumComponent implements OnInit {
     if (this.isNew) {
       this.cancelAddingAquarium.emit();
     }
+  }
+
+  saveAquarium() {
+    this.dataGetter.editAquarium(this.aqua).subscribe(
+      data => console.log(data)
+    );
   }
 
 }

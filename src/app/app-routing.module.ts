@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'test-http',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {

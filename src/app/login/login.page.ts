@@ -10,6 +10,7 @@ import {AlertController} from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
   userName: string;
+  password: string;
 
   constructor(
     private router: Router,
@@ -21,6 +22,25 @@ export class LoginPage implements OnInit {
   }
 
   login() {
+    this.dataGetter.checkUser({
+      username: this.userName,
+      password: this.password
+    }).subscribe(
+      result => {
+        if(result.hasOwnProperty('error')){
+          this.userNotExistsAlert();
+        } else {
+          if(result.hasOwnProperty('token'))
+          {
+            this.dataGetter.setUser(this.userName);
+            this.dataGetter.setToken(result.token);
+            this.router.navigate(['/home']);
+          } else {
+            this.userNotExistsAlert();
+          }
+        }
+      }
+    );
     if (this.dataGetter.userExists(this.userName)) {
       this.dataGetter.setUser(this.userName);
       this.router.navigate(['/home']);
