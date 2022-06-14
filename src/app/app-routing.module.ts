@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'test-http',
     pathMatch: 'full'
   },
   {
@@ -21,6 +21,10 @@ const routes: Routes = [
     path: 'fish/:aqua_id',
     canActivate: [AuthGuard],
     loadChildren: () => import('./fish/fish.module').then( m => m.FishPageModule)
+  },
+  {
+    path: 'test-http',
+    loadChildren: () => import('./test-http/test-http.module').then( m => m.TestHttpPageModule)
   },
 ];
 
